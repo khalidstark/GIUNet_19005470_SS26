@@ -5,12 +5,4 @@
 # macOS metadata
 .DS_Store
 
-# Session log (must come from a real live two-machine run — don't commit a test one)
-giunet_session.log
-
-# Wireshark capture (binary, submitted via ZIP not git)
-*.pcapng
-*.pcap
-
-# Packet Tracer file (submitted via ZIP)
-*.pkt
+# macOS metadata already above

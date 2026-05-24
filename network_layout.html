@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>GIU-Net Network Layout</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: #0a0f1e;
+    font-family: 'Segoe UI', sans-serif;
+    color: #e2e8f0;
+    padding: 40px 20px;
+    min-width: 1400px;
+  }
+  h1 {
+    text-align: center;
+    font-size: 1.6rem;
+    color: #38bdf8;
+    margin-bottom: 4px;
+    letter-spacing: 1px;
+  }
+  .subtitle {
+    text-align: center;
+    color: #64748b;
+    font-size: 0.9rem;
+    margin-bottom: 40px;
+  }
+
+  .canvas {
+    position: relative;
+    width: 1340px;
+    height: 820px;
+    margin: 0 auto;
+    background: #111827;
+    border-radius: 20px;
+    border: 1px solid #1e293b;
+    overflow: hidden;
+  }
+
+  svg.lines {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    pointer-events: none;
+  }
+
+  /* ── Device card ── */
+  .device {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    z-index: 2;
+  }
+  .icon-box {
+    width: 80px; height: 80px;
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 36px;
+    border: 2px solid;
+    box-shadow: 0 0 18px rgba(0,0,0,0.5);
+    transition: transform 0.15s;
+  }
+  .icon-box:hover { transform: scale(1.08); }
+  .dev-name {
+    font-size: 12px;
+    font-weight: 700;
+    text-align: center;
+    line-height: 1.4;
+  }
+  .dev-ip {
+    font-size: 10px;
+    color: #94a3b8;
+    text-align: center;
+    font-family: monospace;
+    line-height: 1.5;
+  }
+
+  /* colours */
+  .router .icon-box { background: #0c2340; border-color: #38bdf8; }
+  .router .dev-name { color: #38bdf8; }
+
+  .sw    .icon-box { background: #0d2e1a; border-color: #4ade80; }
+  .sw    .dev-name { color: #4ade80; }
+
+  .pc    .icon-box { background: #1e1040; border-color: #a78bfa; }
+  .pc    .dev-name { color: #c4b5fd; }
+
+  .server .icon-box { background: #2a0f0f; border-color: #f87171; }
+  .server .dev-name { color: #fca5a5; }
+
+  /* subnet zone labels */
+  .zone {
+    position: absolute;
+    border: 1px dashed;
+    border-radius: 16px;
+    padding: 8px 14px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    z-index: 0;
+    pointer-events: none;
+  }
+
+  /* legend */
+  .legend {
+    width: 1340px;
+    margin: 20px auto 0;
+    display: flex;
+    gap: 30px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  .leg { display: flex; align-items: center; gap: 8px; font-size: 13px; color: #94a3b8; }
+  .leg-line { width: 36px; height: 3px; border-radius: 2px; }
+  .leg-dot  { width: 16px; height: 16px; border-radius: 4px; border: 2px solid; }
+</style>
+</head>
+<body>
+
+<h1>GIU-Net Campus Network — Packet Tracer Layout</h1>
+<p class="subtitle">Match this diagram when placing devices on your Packet Tracer canvas</p>
+
+<div class="canvas" id="canvas">
+  <svg class="lines" id="lines"></svg>
+
+  <!-- ═══════════════════════════════════════ -->
+  <!--  SUBNET ZONES (background decorations) -->
+  <!-- ═══════════════════════════════════════ -->
+  <div class="zone" style="left:30px;top:30px;width:300px;height:700px;border-color:#a78bfa;color:#7c3aed;background:rgba(109,40,217,0.04)">
+    SUBNET C /24 · Student Housing · 19.0.52.0
+  </div>
+  <div class="zone" style="left:370px;top:30px;width:300px;height:380px;border-color:#a78bfa;color:#7c3aed;background:rgba(109,40,217,0.04)">
+    SUBNET B /25 · Student Lab · 19.0.53.0
+  </div>
+  <div class="zone" style="left:720px;top:30px;width:290px;height:380px;border-color:#f87171;color:#b91c1c;background:rgba(185,28,28,0.04)">
+    SUBNET E /28 · Server DMZ · 19.0.53.192
+  </div>
+  <div class="zone" style="left:720px;top:450px;width:290px;height:280px;border-color:#fbbf24;color:#b45309;background:rgba(180,83,9,0.04)">
+    SUBNET A /26 · Staff Offices · 19.0.53.128
+  </div>
+  <div class="zone" style="left:1060px;top:340px;width:240px;height:130px;border-color:#38bdf8;color:#0369a1;background:rgba(3,105,161,0.04)">
+    SUBNET D /30 · WAN Link · 19.0.53.208
+  </div>
+
+  <!-- ═══════════════════════════════ -->
+  <!--  ROUTERS                       -->
+  <!-- ═══════════════════════════════ -->
+  <div class="device router" id="r2" style="left:490px;top:450px">
+    <div class="icon-box">🔀</div>
+    <div class="dev-name">Router 2<br>(2911)</div>
+    <div class="dev-ip">
+      Gi0/0 → Switch B<br>
+      Se0/0: 19.0.53.210
+    </div>
+  </div>
+
+  <div class="device router" id="r1" style="left:1090px;top:370px">
+    <div class="icon-box">🔀</div>
+    <div class="dev-name">Router 1<br>(2911)</div>
+    <div class="dev-ip">
+      Gi0/0 → Switch A<br>
+      Gi0/1 → Switch C<br>
+      Gi0/2 → Switch D<br>
+      Se0/0: 19.0.53.209
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════ -->
+  <!--  SWITCHES                      -->
+  <!-- ═══════════════════════════════ -->
+  <div class="device sw" id="swB" style="left:160px;top:340px">
+    <div class="icon-box">🔌</div>
+    <div class="dev-name">Switch B<br>(2960)</div>
+    <div class="dev-ip">connects Housing PCs</div>
+  </div>
+
+  <div class="device sw" id="swA" style="left:760px;top:160px">
+    <div class="icon-box">🔌</div>
+    <div class="dev-name">Switch A<br>(2960)</div>
+    <div class="dev-ip">connects Lab PCs</div>
+  </div>
+
+  <div class="device sw" id="swC" style="left:760px;top:340px">
+    <div class="icon-box">🔌</div>
+    <div class="dev-name">Switch C<br>(2960)</div>
+    <div class="dev-ip">connects Servers</div>
+  </div>
+
+  <div class="device sw" id="swD" style="left:760px;top:530px">
+    <div class="icon-box">🔌</div>
+    <div class="dev-name">Switch D<br>(2960)</div>
+    <div class="dev-ip">connects Staff PCs</div>
+  </div>
+
+  <!-- ═══════════════════════════════ -->
+  <!--  HOUSING PCs  (Switch B)       -->
+  <!-- ═══════════════════════════════ -->
+  <div class="device pc" id="hpc1" style="left:40px;top:100px">
+    <div class="icon-box">💻</div>
+    <div class="dev-name">Housing-PC-1</div>
+    <div class="dev-ip">19.0.52.2<br>GW: 19.0.52.1</div>
+  </div>
+  <div class="device pc" id="hpc2" style="left:40px;top:260px">
+    <div class="icon-box">💻</div>
+    <div class="dev-name">Housing-PC-2</div>
+    <div class="dev-ip">19.0.52.3<br>GW: 19.0.52.1</div>
+  </div>
+  <div class="device pc" id="hpc3" style="left:40px;top:430px">
+    <div class="icon-box">💻</div>
+    <div class="dev-name">Housing-PC-3</div>
+    <div class="dev-ip">19.0.52.4<br>GW: 19.0.52.1</div>
+  </div>
+  <div class="device pc" id="hpc4" style="left:40px;top:590px">
+    <div class="icon-box">💻</div>
+    <div class="dev-name">Housing-PC-4</div>
+    <div class="dev-ip">19.0.52.5<br>GW: 19.0.52.1</div>
+  </div>
+
+  <!-- ═══════════════════════════════ -->
+  <!--  LAB PCs  (Switch A)           -->
+  <!-- ═══════════════════════════════ -->
+  <div class="device pc" id="lpc1" style="left:590px;top:60px">
+    <div class="icon-box">💻</div>
+    <div class="dev-name">Lab-PC-1</div>
+    <div class="dev-ip">19.0.53.2<br>GW: 19.0.53.1</div>
+  </div>
+  <div class="device pc" id="lpc2" style="left:700px;top:60px">
+    <div class="icon-box">💻</div>
+    <div class="dev-name">Lab-PC-2</div>
+    <div class="dev-ip">19.0.53.3<br>GW: 19.0.53.1</div>
+  </div>
+  <div class="device pc" id="lpc3" style="left:810px;top:60px">
+    <div class="icon-box">💻</div>
+    <div class="dev-name">Lab-PC-3</div>
+    <div class="dev-ip">19.0.53.4<br>GW: 19.0.53.1</div>
+  </div>
+  <div class="device pc" id="lpc4" style="left:920px;top:60px">
+    <div class="icon-box">💻</div>
+    <div class="dev-name">Lab-PC-4</div>
+    <div class="dev-ip">19.0.53.5<br>GW: 19.0.53.1</div>
+  </div>
+
+  <!-- ═══════════════════════════════ -->
+  <!--  SERVERS  (Switch C)           -->
+  <!-- ═══════════════════════════════ -->
+  <div class="device server" id="webSrv" style="left:910px;top:260px">
+    <div class="icon-box">🖥️</div>
+    <div class="dev-name">Web Server</div>
+    <div class="dev-ip">19.0.53.194<br>GW: 19.0.53.193</div>
+  </div>
+  <div class="device server" id="giuSrv" style="left:910px;top:400px">
+    <div class="icon-box">🖥️</div>
+    <div class="dev-name">GIU-Net Server</div>
+    <div class="dev-ip">19.0.53.195<br>GW: 19.0.53.193</div>
+  </div>
+
+  <!-- ═══════════════════════════════ -->
+  <!--  STAFF PCs  (Switch D)         -->
+  <!-- ═══════════════════════════════ -->
+  <div class="device pc" id="spc1" style="left:910px;top:540px">
+    <div class="icon-box">💻</div>
+    <div class="dev-name">Staff-PC-1</div>
+    <div class="dev-ip">19.0.53.130<br>GW: 19.0.53.129</div>
+  </div>
+  <div class="device pc" id="spc2" style="left:910px;top:680px">
+    <div class="icon-box">💻</div>
+    <div class="dev-name">Staff-PC-2</div>
+    <div class="dev-ip">19.0.53.131<br>GW: 19.0.53.129</div>
+  </div>
+
+</div><!-- /canvas -->
+
+<!-- Legend -->
+<div class="legend">
+  <div class="leg"><div class="leg-line" style="background:#475569"></div> Ethernet — straight-through cable</div>
+  <div class="leg"><div class="leg-line" style="background:#f59e0b; background:repeating-linear-gradient(90deg,#f59e0b 0,#f59e0b 10px,transparent 10px,transparent 16px)"></div> WAN Serial — DCE cable</div>
+  <div class="leg"><div class="leg-dot" style="border-color:#38bdf8;background:#0c2340"></div> Router 2911</div>
+  <div class="leg"><div class="leg-dot" style="border-color:#4ade80;background:#0d2e1a"></div> Switch 2960</div>
+  <div class="leg"><div class="leg-dot" style="border-color:#a78bfa;background:#1e1040"></div> PC</div>
+  <div class="leg"><div class="leg-dot" style="border-color:#f87171;background:#2a0f0f"></div> Server</div>
+</div>
+
+<script>
+function center(id) {
+  const canvas = document.getElementById('canvas');
+  const el = document.getElementById(id);
+  const cr = canvas.getBoundingClientRect();
+  const er = el.getBoundingClientRect();
+  return { x: er.left - cr.left + er.width/2, y: er.top - cr.top + er.height/2 };
+}
+
+function line(svg, id1, id2, color, dash) {
+  const a = center(id1), b = center(id2);
+  const el = document.createElementNS('http://www.w3.org/2000/svg','line');
+  el.setAttribute('x1', a.x); el.setAttribute('y1', a.y);
+  el.setAttribute('x2', b.x); el.setAttribute('y2', b.y);
+  el.setAttribute('stroke', color);
+  el.setAttribute('stroke-width', 2.5);
+  if (dash) el.setAttribute('stroke-dasharray', '10 5');
+  svg.appendChild(el);
+}
+
+window.addEventListener('load', () => {
+  const svg = document.getElementById('lines');
+
+  // WAN (dashed amber) — Router1 ↔ Router2
+  line(svg, 'r1', 'r2', '#f59e0b', true);
+
+  // Router 1 → switches
+  line(svg, 'r1', 'swA', '#4ade80', false);
+  line(svg, 'r1', 'swC', '#4ade80', false);
+  line(svg, 'r1', 'swD', '#4ade80', false);
+
+  // Router 2 → Switch B
+  line(svg, 'r2', 'swB', '#4ade80', false);
+
+  // Switch A → Lab PCs
+  ['lpc1','lpc2','lpc3','lpc4'].forEach(id => line(svg, 'swA', id, '#6366f1', false));
+
+  // Switch B → Housing PCs
+  ['hpc1','hpc2','hpc3','hpc4'].forEach(id => line(svg, 'swB', id, '#6366f1', false));
+
+  // Switch C → Servers
+  line(svg, 'swC', 'webSrv', '#f87171', false);
+  line(svg, 'swC', 'giuSrv', '#f87171', false);
+
+  // Switch D → Staff PCs
+  line(svg, 'swD', 'spc1', '#6366f1', false);
+  line(svg, 'swD', 'spc2', '#6366f1', false);
+});
+</script>
+</body>
+</html>
