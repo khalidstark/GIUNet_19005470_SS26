@@ -1,0 +1,21 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Run GIUServer",
+            "request": "launch",
+            "mainClass": "GIUServer",
+            "classPaths": ["."],
+            "console": "integratedTerminal"
+        },
+        {
+            "type": "java",
+            "name": "Run GIUClient",
+            "request": "launch",
+            "mainClass": "GIUClient",
+            "classPaths": ["."],
+            "console": "integratedTerminal"
+        }
+    ]
+}

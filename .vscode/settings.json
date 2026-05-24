@@ -1,0 +1,8 @@
+{
+    "java.project.sourcePaths": ["."],
+    "java.project.outputPath": ".",
+    "java.project.referencedLibraries": [
+        "./*.class"
+    ],
+    "java.compile.nullAnalysis.mode": "disabled"
+}
