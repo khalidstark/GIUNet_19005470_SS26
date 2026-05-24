@@ -1,5 +1,6 @@
-# Compiled Java bytecode
+# Compiled Java bytecode (exclude all except the provided GIULogger)
 *.class
+!GIULogger.class
 
 # macOS metadata
 .DS_Store
