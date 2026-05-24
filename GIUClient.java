@@ -20,7 +20,7 @@ public class GIUClient {
 
     // TODO: Replace with the server machine's IPv4 address before the live two-machine run.
     //       Run `ifconfig` (Mac/Linux) or `ipconfig` (Windows) on the server machine.
-    static final String SERVER_IP   = "172.20.10.4"; // Khalid's machine (server) — run GIUServer.java here
+    static final String SERVER_IP   = "192.168.18.149"; // Khalid's machine (server) — run GIUServer.java here
 
     static final String HELLO_MSG   = "HELLO-GIU-19005470-14";
     static final String OK_EXPECTED = "OK-GIU-19005470-14";
