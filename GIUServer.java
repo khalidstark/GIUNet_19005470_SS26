@@ -78,7 +78,8 @@ public class GIUServer {
     public static void main(String[] args) throws Exception {
 
         socket = new DatagramSocket(PORT);
-        System.out.println("[SERVER] Listening on port " + PORT + " ...");
+        System.out.println("[SERVER] Listening on port " + PORT);
+        System.out.println("[SERVER] Waiting for connection...");
 
         // ---- Handshake ----
         byte[] buf = new byte[BUFFER_SIZE];
@@ -104,10 +105,11 @@ public class GIUServer {
             return;
         }
 
+        System.out.println("[SERVER] Received: " + payload);
         byte[] okPkt = pack(0, OK_REPLY);
         sendPacket(okPkt);
-        System.out.println("[SERVER] Handshake OK. Connected to " + clientAddr + ":" + clientPort);
-        System.out.println("[SERVER] Type a message and press Enter. Type EXIT to quit.");
+        System.out.println("[SERVER] Handshake complete.");
+        System.out.println("[SERVER] Connection established!");
 
         running = true;
 

@@ -84,7 +84,7 @@ public class GIUClient {
         BufferedReader stdin = new BufferedReader(new InputStreamReader(System.in));
 
         // Per spec: the socket must NOT be opened until the user types CONNECT.
-        System.out.println("[CLIENT] Type CONNECT to initiate the connection.");
+        System.out.println("[CLIENT] Type CONNECT to open a connection.");
         while (true) {
             String cmd = stdin.readLine();
             if (cmd != null && cmd.trim().equals("CONNECT")) break;
@@ -94,7 +94,7 @@ public class GIUClient {
         socket = new DatagramSocket();
         byte[] helloPkt = pack(0, HELLO_MSG);
         sendPacket(helloPkt);
-        System.out.println("[CLIENT] HELLO sent. Waiting for server...");
+        System.out.println("[CLIENT] HELLO sent: " + HELLO_MSG);
 
         byte[] buf = new byte[BUFFER_SIZE];
         DatagramPacket response = new DatagramPacket(buf, buf.length);
@@ -110,7 +110,9 @@ public class GIUClient {
             return;
         }
 
-        System.out.println("[CLIENT] Connected! Type a message and press Enter. Type EXIT to quit.");
+        System.out.println("[CLIENT] Server replied: " + respPayload);
+        System.out.println("[CLIENT] Handshake complete.");
+        System.out.println("[CLIENT] Connected! Type messages or EXIT.");
         running = true;
 
         // ---- Receiver thread ----
